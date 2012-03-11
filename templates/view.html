@@ -1,0 +1,24 @@
+$def with(content)
+$:render.header()
+
+        <div class="box">
+			<table id="resource">
+				<thead id="theader">
+					<th class="resource_name">资源名称</th>
+					<th class="typeL1">分类</th>
+					<th class="typeL2">二级分类</th>
+					<th class="magnet">链接</th>
+					<th class="size">资源大小</th>
+				</thead>
+				$for items in content:
+				    <tr class="resourceitem">
+					    <td class="resource_name">$items.get('resource_name')</td>	
+					    <td class="typeL1">$items.get('typeL1')</td>	
+					    <td class="typeL2">$items.get('typeL2')</td>	
+					    <td class="magnet"><a href="$items.get('magnet')">下载</a></td>	
+					    <td class="size">$items.get('size')</td>	
+				    <tr>
+			</table>
+        </div>
+
+$:render.foot()
