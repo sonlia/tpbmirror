@@ -3,14 +3,13 @@
 
 import web
 from config.settings import render
-from config.settings import topdbname, alldbname 
+from config.settings import topdbname
 from models import mirrordb
 
 class index():
     "显示主页面"
     def GET(self):
         return render.index()
-
 
 class topview():
     "显示Top100的检索页面"
@@ -40,6 +39,18 @@ class typeview():
 
         results = mirrordb.get_records(topdbname, typeL1, typeL2)
         return render.view(results)
+    
+class resource_info():
+    "根据传入的resource_id检索资源信息"
+    def GET(self):
+        try:
+            resource_id = int(web.ctx.path.split('/')[2])
+            result = mirrordb.get_extern_info(resource_id)
+            return render.resource_info(result[0])
+        except:
+            pass
+            return render.error("没有找到您要的信息，我们会尽快录入", None)
+        
 
 if __name__ == '__main__':
-    top.GET()
+    topview.GET()

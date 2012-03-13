@@ -1,5 +1,5 @@
 body { background:#EEE; }
-.box { margin-bottom:20px; }
+.box {  margin:10px auto; margin-bottom:20px;}
 .clear { clear:both; }
 .float_left { float:left; }
 .float_right { float:right; }
@@ -22,16 +22,17 @@ p { line-height:1.5em; }
 a { color:#3366CC; text-decoration:underline; }
 a:hover { color:#FF3300; }
 
-table{ margin:5px, 5px; padding:5px, 5px; border-collapse:collapse; border:1px solid #aaa }
-table thead tr{background-color:#8FC629; padding:10px, 0px;}
-table tr th{ padding:10px, 0px;}
-table tr { margin:0px, padding:3px; border:1px solid #ccc }
+table{ border:1px solid #aaa }
+table thead tr{background-color:#8FC629;}
+
+table tr { margin:0px auto; padding:3px; border:1px solid #ccc; }
 .typeL1 { width:60px;}
 .typeL2 { width:100px; }
 .magnet { width:60px; }
 .size { width:70px; }
+.info { width:70px; }
 
-.page { width:700px; margin:10px auto; background:#FFF; padding:10px 20px; border:1px solid #CCC; border-radius:5px; }
+.page { width:900px; margin:10px auto; background:#FFF; padding:10px 20px; border:1px solid #CCC; border-radius:5px; }
 
     .header { padding-top:10px; border-bottom:1px solid #CCC; }
         .header h1 { font-size:50px; }
@@ -48,7 +49,7 @@ table tr { margin:0px, padding:3px; border:1px solid #ccc }
     .foot { border-top:1px solid #CCC; color:#666; padding-top:10px; font-size:11px; }
         .foot img { vertical-align:top; }
 
-/*ÒÔÏÂ²¿·ÖÎªÊ×Ò³ÑùÊ½*/
+/*ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½Îªï¿½ï¿½Ò³ï¿½ï¿½Ê½*/
 #browseContainer { text-align: center; font-family: Verdana, Helvetica; font-size: 1em; }
 #browseContainer a { color: #009; text-decoration: none; }
 #browseContainer a:hover { border-bottom: 1px solid #009; }
@@ -71,4 +72,4 @@ dt#latest a:hover { border-bottom: 1px solid #080; }
 dt#showall a{ color: #080; }
 dt#showall a:hover { border-bottom: 1px solid #080; }
 
-#categoriesTable { width: 700px; height: auto; border: 0; text-align: center; margin: 20px auto; }
+#categoriesTable { width: 880px; height: auto; border: 0; text-align: center; margin: 20px auto; }

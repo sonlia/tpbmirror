@@ -3,7 +3,7 @@
 
 import urllib2
 import re
-from BeautifulSoup import BeautifulSoup as BSoup
+from BeautifulSoup import BeautifulSoup
 
 from config.settings import topdbname, alldbname
 from models import mirrordb
@@ -34,7 +34,8 @@ def getallURL(startURL):
     totalurls = []
     for url in urls:
         for i in range(100):
-            totalurls.append(url + str(i) + '/3/')
+            for ii in range(2,15):
+                totalurls.append(url + str(i) + '/' + str(ii) + '/')
     return totalurls
 
 def fetch(url, dbname = alldbname):
@@ -42,30 +43,44 @@ def fetch(url, dbname = alldbname):
     根据指定的url抓取资源信息，存到数据库中
     此页面必须是直接有链接的页面
     """ 
+    print int(url[24:27])
+    if int(url[24:27]) > 199:
+        return 
+    
     try:
-        doc = urllib2.urlopen(url)
-        soup = BSoup(doc.read())
-        souptrs = BSoup(str(soup.findAll('tr')))
-        for tr in souptrs.contents[2:]:
-            if hasattr(tr, 'name'):
-                #获取资源名称，类别，链接地址及大小
-                try:
-                    acollect = tr.findAll('a')
-                    typeL1 = ''.join(acollect[0].contents)
-                    typeL2 = ''.join(acollect[1].contents)
-                    name = ''.join(acollect[2].contents)
-                    magnetlink = acollect[3]['href']
-                    font = tr.findAll('font')
-                    sizelazy = ''.join(font[0].contents[0])
-                    #获取大小，不用费心看了，严重依赖于格式
-                    size = sizelazy[sizelazy.find('Size') + 5:sizelazy.find('iB') + 2].replace(ur'&nbsp;', '')
-                    print "name:%s, typeL1:%s, typeL2:%s, size:%s" %(name, typeL1, typeL2, size)
-                    mirrordb.add_record(dbname ,name, typeL1, typeL2, magnetlink, size)
-                except:
-                    print 'fetch resouce url Err, url:%s' %(url) 
+        doc = urllib2.urlopen(url, timeout = 10)
     except:
         print 'open url Err, url:%s' %(url)
+        return    
+    try:
+        soup = BeautifulSoup.BeautifulSoup(doc.read())
+        souptrs = BeautifulSoup.BeautifulSoup(str(soup.findAll('tr'))) 
+    except:
+        print 'BeautifulSoup Err' 
+        return
+    
+    for tr in souptrs.contents[2:]:
+        if hasattr(tr, 'name'):
+            #获取资源名称，类别，链接地址及大小
+            i = 0
+            try:
+                acollect = tr.findAll('a')
+                typeL1 = ''.join(acollect[0].contents)
+                typeL2 = ''.join(acollect[1].contents)
+                name = ''.join(acollect[2].contents)
+                magnetlink = acollect[3]['href']
+                font = tr.findAll('font')
+                sizelazy = ''.join(font[0].contents[0])
+                #获取大小，不用费心看了，严重依赖于格式
+                size = sizelazy[sizelazy.find('Size') + 5:sizelazy.find('iB') + 2].replace(ur'&nbsp;', '')
+                print "name:%s, typeL1:%s, typeL2:%s, size:%s" % (name, typeL1, typeL2, size)
+                mirrordb.add_record(dbname , name, typeL1, typeL2, magnetlink, size)
+            except:
+                i = i + 1
+                print 'fetch resouce url Err, url:%s' % (url) 
+                if i > 3:
+                    break
 
 if __name__ == '__main__':
     #fetch('http://labaia.ws/top/602')
-    print getURL('http://labaia.ws/top')
+    print gettopURL('http://labaia.ws/top')

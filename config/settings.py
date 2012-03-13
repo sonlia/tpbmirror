@@ -8,6 +8,7 @@ db = web.database(dbn='sqlite', db=database)
 #数据表名
 topdbname = 'top'
 alldbname = 'allsource'
+infodbname = 'doubaninfo'
 
 render = web.template.render('templates/', cache=False)
 

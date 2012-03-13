@@ -1,0 +1,22 @@
+$def with(content)
+$:render.header()
+
+        <div class="box">
+            <div id="resource_info">
+                <h1>资源信息来源于豆瓣</h1>
+                <br />
+                    <ul>
+                        详细信息:
+                        <li><img src="$content['imgURL']"></li>
+                        <li>评分:$content['rating']</li>
+                        <li>名称:$content['aka']</li>
+                        <li>发行时间:$content['pubdate']</li>
+                        <li>国家:$content['country']</li>
+                        <li>介绍:$content['summary']</li>
+                        <li><a href="$content['doubanURL']">豆瓣地址:</a>$content['doubanURL']</li>
+                    </ul>
+			</div>
+			       
+        </div>
+
+$:render.foot()
