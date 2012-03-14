@@ -1,33 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>$config.site_name</title>
-<link href="$config.static/styles/reset.css" rel="stylesheet" type="text/css" />
-<link href="$config.static/styles/index/style.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-<div class="page">
-    <div class="header box">
-        <span><h1><a href="/">$config.site_name</a></h1></span>
-        <span><h2>轻巧的资源聚合站点</h2></span>
-    </div>
-
-    <div class="search box">
-        <form method="get" action="/search">
-            <span>全站搜索:</span>
-            <input type="text" name="searchname">
-            <select name="searchtype">
-                <option value="All">全部</option>
-                <option value="Audio">音频</option>
-                <option value="Video">电影</option>
-                <option value="Applications">软件</option>
-                <option value="Games">游戏</option>
-                <option value="Other">其它</option>
-            </select>
-            <input type="submit">
-        </form>
-    </div>
-
-    <div class="main box">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>$config.site_name</title>
+        <link href="$config.static/styles/reset.css" rel="stylesheet" type="text/css" />
+        <link href="$config.static/styles/index/style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="page">
+            <div class="header box">
+                <h1><span><a href="/">$config.site_name</a></span></h1>
+                <h2><span>轻巧的资源聚合站点</span></h2>
+            </div>
+            <div class="search box">
+                <form method="get" action="/search">
+                    <span>全站搜索:</span>
+                    <input type="text" name="searchname">
+                    <select name="searchtype">
+                        <option value="All">全部</option>
+                        <option value="Audio">音频</option>
+                        <option value="Video">电影</option>
+                        <option value="Applications">软件</option>
+                        <option value="Games">游戏</option>
+                        <option value="Other">其它</option>
+                    </select>
+                    <input type="submit">
+                </form>
+            </div>
+            <div class="main box">

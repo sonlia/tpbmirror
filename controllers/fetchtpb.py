@@ -3,9 +3,10 @@
 
 import urllib2
 import re
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
+from getopt import *
+import sys
 
-from config.settings import topdbname, alldbname
 from models import mirrordb
 
 def gettopURL(startURL):
@@ -17,7 +18,7 @@ def gettopURL(startURL):
         if not s:
             break
         urls = pattern.findall(s)
-        urls = ["http://labaia.ws/"+url for url in urls]
+        urls = ["http://labaia.ws/" + url for url in urls]
         topfp.close()
         return urls
 
@@ -28,29 +29,29 @@ def getallURL(startURL):
     pattern = re.compile("browse/[0-9]+")
     s = allfp.read()
     urls = pattern.findall(s)
-    urls = ["http://labaia.ws/"+url+'/' for url in urls]
+    urls = ["http://labaia.ws/" + url + '/' for url in urls]
     allfp.close()
 
     totalurls = []
     for url in urls:
         for i in range(100):
-            for ii in range(2,15):
+            for ii in range(2, 15):
                 totalurls.append(url + str(i) + '/' + str(ii) + '/')
     return totalurls
 
-def fetch(url, dbname = alldbname):
+def fetch(url, dbname, begin, end):
     """
     根据指定的url抓取资源信息，存到数据库中
     此页面必须是直接有链接的页面
     """ 
     print int(url[24:27])
-    if int(url[24:27]) > 199:
+    if int(url[24:27]) >= end or int(url[24:27]) < begin:
         return 
     
     try:
-        doc = urllib2.urlopen(url, timeout = 10)
+        doc = urllib2.urlopen(url, timeout=10)
     except:
-        print 'open url Err, url:%s' %(url)
+        print 'open url Err, url:%s' % (url)
         return    
     try:
         soup = BeautifulSoup.BeautifulSoup(doc.read())
@@ -80,7 +81,22 @@ def fetch(url, dbname = alldbname):
                 print 'fetch resouce url Err, url:%s' % (url) 
                 if i > 3:
                     break
+                
+#just for test                
+def fetch_all(urllist, begin, end):
+    for url in urllist:
+        try:
+            fetch(url, dbname='allsource', begin=begin, end=end)
+        except:
+            print 'fetch err url:%s' % (url)
+            continue
 
 if __name__ == '__main__':
+    opts, args = getopt(sys.argv[1:], "limit=")
+    print args[0], args[1]
     #fetch('http://labaia.ws/top/602')
-    print gettopURL('http://labaia.ws/top')
+    startURL = 'http://labaia.ws/browse/'
+    urllist = getallURL(startURL) 
+    fetch_all(urllist, int(args[0]), int(args[1]))
+
+

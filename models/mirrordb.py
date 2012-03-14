@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import urllib2
-import time
-from BeautifulSoup import BeautifulSoup as BSoup
-
 from config.settings import db
 from config.settings import alldbname, infodbname
 
@@ -27,13 +23,14 @@ def get_records(dbname, typeL1 = 'Audio', typeL2 = None, limit = 100):
             where = 'typeL1=$typeL1', limit=limit).list()
 
 
-def search_all_resource(name, type):
+def search_all_resource(name, resource_type = 'All'):
     "全站搜索"
-    if type == 'All':
+    if resource_type == 'All':
         return db.select(alldbname, where = 'resource_name like "%' + name + '%"', limit = 100).list()
     else:
         return db.select(alldbname, 
-            where = 'typeL1 = "' + type + '" and resource_name like "%' + name + '%"', limit = 100).list()
+            where = 'typeL1 = "' + resource_type + '" and resource_name like "%' + name + '%"', limit = 100).list()
 
 def get_extern_info(resource_id = -1):
+    "获取资源的详细信息"
     return db.select(infodbname, where = 'resource_id = ' + str(resource_id)).list()

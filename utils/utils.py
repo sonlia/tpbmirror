@@ -13,9 +13,10 @@ def change_allsource_extern_info():
         db.query('update allsource set extern_info="True" where resource_id =' + str(item['resource_id']))
 
 def change_top_resource_id():
+    "用于从主表中检索资源，在top中增加resource_id.可以作为一个手工任务定期进行"
     res = db.query('select * from top').list()
     for item in res:
-        re_res = db.select('allsource', where= 'magnet = "' + item['magnet'] + '"').list()
+        re_res = db.select('allsource', where='magnet = "' + item['magnet'] + '"').list()
         if re_res:
             db.query('update top set resource_id=' + str(re_res[0]['resource_id']))
 

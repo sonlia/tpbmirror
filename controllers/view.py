@@ -22,7 +22,7 @@ class searchview():
     def GET(self):
         search_type = web.input().searchtype
         search_name = web.input().searchname 
-        results = mirrordb.search_all_resource(type = search_type, name = search_name)
+        results = mirrordb.search_all_resource(type=search_type, name=search_name)
         return render.view(results)
 
 class typeview():

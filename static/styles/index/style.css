@@ -1,10 +1,12 @@
 body { background:#EEE; }
 .box {  margin:10px auto; margin-bottom:20px;}
+.minibox {  margin:0px auto; width:900px; }
 .clear { clear:both; }
 .float_left { float:left; }
 .float_right { float:right; }
 .left { text-align:left; }
 .right { text-align:right; }
+.center { text-align:center; }
 .url { background:url(images/website.png) no-repeat right; padding-right:20px; }
 .tips { color:#CCC; }
 .v_top { vertical-align:top; }
@@ -23,7 +25,7 @@ a { color:#3366CC; text-decoration:underline; }
 a:hover { color:#FF3300; }
 
 table{ border:1px solid #aaa }
-table thead tr{background-color:#8FC629;}
+table thead tr{ background-color:#8FC629; }
 
 table tr { margin:0px auto; padding:3px; border:1px solid #ccc; }
 .typeL1 { width:60px;}
@@ -32,7 +34,7 @@ table tr { margin:0px auto; padding:3px; border:1px solid #ccc; }
 .size { width:70px; }
 .info { width:70px; }
 
-.page { width:900px; margin:10px auto; background:#FFF; padding:10px 20px; border:1px solid #CCC; border-radius:5px; }
+.page { width:960px; margin:10px auto; background:#FFF; padding:10px 20px; border:1px solid #CCC; border-radius:5px; }
 
     .header { padding-top:10px; border-bottom:1px solid #CCC; }
         .header h1 { font-size:50px; }
@@ -48,8 +50,10 @@ table tr { margin:0px auto; padding:3px; border:1px solid #ccc; }
 
     .foot { border-top:1px solid #CCC; color:#666; padding-top:10px; font-size:11px; }
         .foot img { vertical-align:top; }
+        #footinfo { float:right; }
+        #counttools{ text-align:center; }
 
-/*���²���Ϊ��ҳ��ʽ*/
+/*保留 */
 #browseContainer { text-align: center; font-family: Verdana, Helvetica; font-size: 1em; }
 #browseContainer a { color: #009; text-decoration: none; }
 #browseContainer a:hover { border-bottom: 1px solid #009; }
@@ -72,4 +76,4 @@ dt#latest a:hover { border-bottom: 1px solid #080; }
 dt#showall a{ color: #080; }
 dt#showall a:hover { border-bottom: 1px solid #080; }
 
-#categoriesTable { width: 880px; height: auto; border: 0; text-align: center; margin: 20px auto; }
+#categoriesTable { width: 900px; height: auto; border: 0; text-align: center; margin: 20px auto; }

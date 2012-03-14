@@ -15,8 +15,8 @@ render = web.template.render('templates/', cache=False)
 web.config.debug = True
 
 config = web.storage(
-    static = '/static',
-    site_name = 'tpbmirror',
+    static='/static',
+    site_name='tpbmirror',
 )
 
 

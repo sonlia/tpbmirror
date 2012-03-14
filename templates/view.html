@@ -1,32 +1,35 @@
 $def with(content)
 $:render.header()
 
-        <div class="box">
-            <div id="resource_table">
-			<table id="resource">
+    <div class="box">
+        <div id="resource_table" class="box">
+			<table id="resource" class="minibox">
 				<thead id="theader">
-					<th class="resource_name">资源名称</th>
-					<th class="typeL1">分类</th>
-					<th class="typeL2">二级分类</th>
-					<th class="magnet">链接</th>
-					<th class="size">资源大小</th>
-					<th class="info">信息</th>
+				    <tr>
+    					<th class="resource_name">资源名称</th>
+    					<th class="typeL1">分类</th>
+    					<th class="typeL2">二级分类</th>
+    					<th class="magnet">链接</th>
+    					<th class="size">资源大小</th>
+    					<th class="info">信息</th>
+					</tr>
 				</thead>
+				<tbody id="tbody">
 				$for items in content:
 				    <tr class="resourceitem">
-					    <td class="resource_name" id="$items.get('resource_id')">$items.get('resource_name')</td>	
-					    <td class="typeL1">$items.get('typeL1')</td>	
-					    <td class="typeL2">$items.get('typeL2')</td>	
-					    <td class="magnet"><a href="$items.get('magnet')">下载</a></td>	
+					    <td class="resource_name" id="$items.get('resource_id')">$items.get('resource_name')</td>
+					    <td class="typeL1">$items.get('typeL1')</td>
+					    <td class="typeL2">$items.get('typeL2')</td>
+					    <td class="magnet"><a href="$items.get('magnet')">下载</a></td>
 					    <td class="size">$items.get('size')</td>
 					    $if items.get('extern_info') == 'True':
-					       <td class="info"><a href="/resourceid/$items.get('resource_id')"><img src="/static/images/extern_info_true.gif"></a></td>
+					       <td class="info" align="center" valign="middle"><a href="/resourceid/$items.get('resource_id')"><img src="/static/images/extern_info_true.gif" alt="详细信息"></a></td>
 					    $else:
-					       <td class="info"><img src="/static/images/extern_info_false.gif"></td>
-				    <tr>
+					       <td class="info" align="center" valign="middle"><img src="/static/images/extern_info_false.gif"></td>
+				    </tr>
+				    </tbody>
 			</table>
-			</div>
-			       
         </div>
+    </div>
 
 $:render.foot()

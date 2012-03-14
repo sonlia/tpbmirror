@@ -10,7 +10,7 @@ import scheming
 class testdb():
     
     def GET(self):
-        db.insert('top', resource_name = u'MagicZhang', typeL1 = 'movie',typeL2 = 'kongfu', magnet='zz', size='10B')
+        db.insert('top', resource_name=u'MagicZhang', typeL1='movie', typeL2='kongfu', magnet='zz', size='10B')
 
 class testgetURL():
     
