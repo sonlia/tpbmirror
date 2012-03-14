@@ -6,9 +6,8 @@ database = "database/tpbmirror.db"
 db = web.database(dbn='sqlite', db=database)
 
 #数据表名
-topdbname = 'top'
-alldbname = 'allsource'
-infodbname = 'doubaninfo'
+alldbname = 'all_resource'
+infodbname = 'resource_info'
 
 render = web.template.render('templates/', cache=False)
 

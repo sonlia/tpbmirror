@@ -3,7 +3,6 @@
 
 import web
 from config.settings import render
-from config.settings import topdbname
 from models import mirrordb
 
 class index():
@@ -14,7 +13,7 @@ class index():
 class topview():
     "显示Top100的检索页面"
     def GET(self):
-        results = mirrordb.get_records(topdbname)
+        results = mirrordb.get_top_records()
         return render.view(results)
 
 class searchview():
@@ -22,7 +21,7 @@ class searchview():
     def GET(self):
         search_type = web.input().searchtype
         search_name = web.input().searchname 
-        results = mirrordb.search_all_resource(type=search_type, name=search_name)
+        results = mirrordb.search_all_resource(resource_type=search_type, name=search_name)
         return render.view(results)
 
 class typeview():
@@ -37,7 +36,7 @@ class typeview():
         if typeL2:
             typeL2 = typeL2.replace('_', ' ')
 
-        results = mirrordb.get_records(topdbname, typeL1, typeL2)
+        results = mirrordb.get_top_records(typeL1, typeL2)
         return render.view(results)
     
 class resource_info():

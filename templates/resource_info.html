@@ -1,12 +1,16 @@
 $def with(content)
 $:render.header()
 <div class="box">
-    <div id="resource_info">
-        <h1>资源信息来源于豆瓣</h1>
+    <div class="box">
+        <h3>资源信息来源于网络</h3>
+        <p>感谢豆瓣提供开放API</p>
+    </div>
+    <div id="resource_info" class="box">
         <br />
         <ul>
-            详细信息:
-            <li><img src="$content['imgURL']">
+            <li>详细信息:</li>
+            <li>
+                <img src="$content['imgURL']" alt="封面">
             </li>
             <li>
                 评分:$content['rating']
@@ -24,7 +28,8 @@ $:render.header()
                 介绍:$content['summary']
             </li>
             <li>
-                <a href="$content['doubanURL']">豆瓣地址:</a>$content['doubanURL']
+                <p>豆瓣地址:</p>
+                <a href="$content['doubanURL']">$content['doubanURL']</a>
             </li>
         </ul>
     </div>
