@@ -2,8 +2,7 @@ $def with(content)
 $:render.header()
 
     <div class="box">
-        <div id="resource_table" class="box">
-			<table id="resource" class="minibox">
+			<table id="resource" class="minibox" style="table-layout:fixed">
 				<thead id="theader">
 				    <tr>
     					<th class="resource_name">资源名称</th>
@@ -12,24 +11,31 @@ $:render.header()
     					<th class="magnet">链接</th>
     					<th class="size">资源大小</th>
     					<th class="info">信息</th>
+    					<th class="score">评分</th>
 					</tr>
 				</thead>
 				<tbody id="tbody">
 				$for items in content:
 				    <tr class="resourceitem">
-					    <td class="resource_name" id="$items.get('resource_id')">$items.get('resource_name')</td>
+					    <td class="resource_name" id="$items.get('resource_id')" style="text-overflow:ellipsis; overflow: hidden; " >$:items.get('resource_name')</td>
 					    <td class="typeL1">$items.get('typeL1')</td>
 					    <td class="typeL2">$items.get('typeL2')</td>
-					    <td class="magnet"><a href="$items.get('magnet')">下载</a></td>
+					    <td ><a class="magDown" href="$items.get('magnet')"><span class="magnet"></span>下载</a></td>
 					    <td class="size">$items.get('size')</td>
 					    $if items.get('extern_info') == 'True':
 					       <td class="info" align="center" valign="middle"><a href="/resourceid/$items.get('resource_id')"><img src="/static/images/extern_info_true.gif" alt="详细信息"></a></td>
 					    $else:
 					       <td class="info" align="center" valign="middle"><img src="/static/images/extern_info_false.gif"></td>
+				        <td class="scoretd">
+				            <p class="score">
+				                <a id="diglikeid"  rel="nofollow" href="#" class="dig like float_left" title="这个资源不错，我顶">顶+$items.get('score_like')</a>
+				                <a id="digburyid"  rel="nofollow" href="#" class="dig bury float_right" title="这个资源太烂了，我踩">踩+$items.get('score_bury')</a>
+				                <span style="visibility:hidden">$items.get('resource_id')</span>
+				            </p>
+				        </td>
 				    </tr>
 				    </tbody>
 			</table>
-        </div>
     </div>
 
 $:render.foot()

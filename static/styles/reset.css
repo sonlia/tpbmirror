@@ -15,7 +15,7 @@ th, td { /* table elements 表格元素 */
     padding: 0;
 }
 
-/* 设置默认字体 */
+/* 设置默认字体  */
 body,
 button, input, select, textarea { /* for ie */
     /*font: 12px/1 Tahoma, Helvetica, Arial, "宋体", sans-serif;*/

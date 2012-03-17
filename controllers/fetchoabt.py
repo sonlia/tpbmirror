@@ -4,19 +4,26 @@
 import urllib2
 import time
 import web
-from bs4 import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 
 
 class CFetchoabt():
+    """
+            抓取oabt的资源
+            使用方法:
+            python fetchoabt.py
+             因为oabt每天的更新不多，每天定时运行一次就行了
+    """
     
     _movie_info = {}
     
     def __init__(self, url):
         self.url = url
+        database = "../database/tpbmirror.db"
+        self.db = web.database(dbn='sqlite', db=database)
 
     def magic_fetch_and_insert(self):
-        database = "../database/tpbmirror.db"
-        db = web.database(dbn='sqlite', db=database)
+
         headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
                    'Accept-Encoding': 'gzip, deflate',
                    'Accept-Language': 'zh-cn,zh;q=0.5',
@@ -27,7 +34,7 @@ class CFetchoabt():
         req = urllib2.Request(self.url, headers=headers)
         doc = urllib2.urlopen(req).read()
 
-        page_soup = BeautifulSoup(doc)
+        page_soup = BeautifulSoup.BeautifulSoup(doc)
         tables = page_soup.findAll('table', cellspacing="0")
         tables = tables[3].contents[4:]
         for tr in tables:
@@ -37,7 +44,7 @@ class CFetchoabt():
                 resource_name = tr.contents[1].contents[3].contents[0].contents[0] #name
                 magnet = tr.contents[1].contents[5].contents[1]['href'] #magnet
                 ed2k = tr.contents[1].contents[5].contents[2]['ed2k'] #ed2k
-                db.insert('oabt', size=size, typeL1='Video', typeL2=typeL2, resource_name=resource_name, magnet=magnet, ed2k=ed2k)
+                self.db.insert('oabt', size=size, typeL1='Video', typeL2=typeL2, resource_name=resource_name, magnet=magnet, ed2k=ed2k)
             except:
                 continue
         
@@ -45,7 +52,7 @@ class CFetchoabt():
         pass
 
 if __name__ == '__main__':
-    urllist = ['http://oabt.org/index.php?page=' + str(i) for i in range(331)]
+    urllist = ['http://oabt.org/index.php?page=' + str(i) for i in range(10)]
     for url in urllist:
         try:
             oabt = CFetchoabt(url)

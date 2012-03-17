@@ -4,7 +4,7 @@
 import web
 import fetchtpb
 from config.settings import render
-from config.settings import topdbname, alldbname
+from config.settings import alldbname
 
 class daemon_fetch():
     "抓取功能"
@@ -27,7 +27,7 @@ class daemon_fetch():
             for i in range(100):
                 self.urllist.append(startURL + str(i) + '/3/')
         elif startURL.find('top') > 0:
-            self.dbname = topdbname
+            self.dbname = alldbname
             if startURL.endswith('top/'):
                 self.urllist = fetchtpb.gettopURL(startURL) 
             else:

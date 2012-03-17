@@ -7,7 +7,7 @@ import web
 app = web.application(urls, globals())
 
 def notfound():
-    return web.notfound(render.error("Hi,这个页面掉入了宇宙的漩涡，二次纪元后才会重新出现...", None))
+    return web.notfound(render.error("Hi,这个页面掉入了宇宙的漩涡，二次纪元后才会重新出现...", '/'))
 
 app.notfound = notfound
 

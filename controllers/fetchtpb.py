@@ -3,11 +3,12 @@
 
 import urllib2
 import re
-from bs4 import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 from getopt import *
 import sys
 
 from models import mirrordb
+from config.settings import alldbname
 
 def gettopURL(startURL):
     "获取startURL页面上的所有链接"
@@ -39,10 +40,10 @@ def getallURL(startURL):
                 totalurls.append(url + str(i) + '/' + str(ii) + '/')
     return totalurls
 
-def fetch(url, dbname, begin, end):
+def fetch(url, begin, end, dbname = alldbname):
     """
-    根据指定的url抓取资源信息，存到数据库中
-    此页面必须是直接有链接的页面
+        根据指定的url抓取资源信息，存到数据库中
+        此页面必须是直接有链接的页面
     """ 
     print int(url[24:27])
     if int(url[24:27]) >= end or int(url[24:27]) < begin:
@@ -86,11 +87,17 @@ def fetch(url, dbname, begin, end):
 def fetch_all(urllist, begin, end):
     for url in urllist:
         try:
-            fetch(url, dbname='allsource', begin=begin, end=end)
+            fetch(url, dbname=alldbname, begin=begin, end=end)
         except:
             print 'fetch err url:%s' % (url)
             continue
 
+""""
+抓取海盗湾
+使用方法:
+    python fetchtpb.py <begin> <end>
+        海盗湾的资源总分类大概在100-700间，也就是你只能输入100-700间的范围
+"""
 if __name__ == '__main__':
     opts, args = getopt(sys.argv[1:], "limit=")
     print args[0], args[1]
@@ -98,5 +105,4 @@ if __name__ == '__main__':
     startURL = 'http://labaia.ws/browse/'
     urllist = getallURL(startURL) 
     fetch_all(urllist, int(args[0]), int(args[1]))
-
 

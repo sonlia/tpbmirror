@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
 import web
 from config.settings import render
 from models import mirrordb
@@ -8,7 +9,7 @@ from models import mirrordb
 class index():
     "显示主页面"
     def GET(self):
-        return render.index()
+        return render.index(mirrordb.get_hot_types())
 
 class topview():
     "显示Top100的检索页面"
@@ -38,6 +39,14 @@ class typeview():
 
         results = mirrordb.get_top_records(typeL1, typeL2)
         return render.view(results)
+    
+    def POST(self):
+        try:
+            #从数据库中选择like_count或bury_count，再加1
+            mirrordb.set_score_value(web.input()['resource_id'], web.input()['scoretype'])
+            return mirrordb.get_score_value(web.input()['resource_id'], web.input()['scoretype'])
+        except:
+            pass
     
 class resource_info():
     "根据传入的resource_id检索资源信息"

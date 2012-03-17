@@ -16,7 +16,10 @@ body { background:#EEE; }
 .tips { color:#666; }
 .long_txt { width:98%; }
 .must_be { color:red !important; }
+.magDown a{ display:block; width:60px; position:relative; }
+.magDown span{ position:absolute; width:60px; height:90%; cursor:pointer; background:url(images/download.gif) no-repeat; display:block }
 textarea { line-height:1.5em; }
+
 
 image { border:none; }
 p { line-height:1.5em; }
@@ -24,31 +27,49 @@ p { line-height:1.5em; }
 a { color:#3366CC; text-decoration:underline; }
 a:hover { color:#FF3300; }
 
-table{ border:1px solid #aaa }
+table{ border:1px solid #aaa; }
 table thead tr{ background-color:#8FC629; }
 
-table tr { margin:0px auto; padding:3px; border:1px solid #ccc; }
-.typeL1 { width:100px;}
-.typeL2 { width:100px; }
-.magnet { width:60px; }
-.size { width:70px; }
-.info { width:70px; }
+table tr { margin:5px auto; border:1px solid #ccc; }
+table tr td{ margin:5px 5px; padding:3px 0px; }
 
-.page { width:960px; margin:10px auto; background:#FFF; padding:10px 20px; border:1px solid #CCC; border-radius:5px; }
+.resource_name { width:58% }
+.typeL1 { width:60px;}
+.typeL2 { width:60px; }
+.magnet { width:50px; }
+.size { width:60px; }
+.info { width:30px; }
+.scoretd{ width:100px;}
+.score p{ width:90px; float:right; }
+
+.dig {  margin:0px 2px; border-radius: 5px 5px 5px 5px; color: #FFFFFF; font-size: 1.0em; padding: 3px 5px; }
+.bury { background: none repeat scroll 0 0 #990000; }
+.like { background: none repeat scroll 0 0 #56C750; }
+.like:hover{ background:#005000; }
+.bury:hover{ background:#D90000; }
+
+/* 热门 */
+#hottype{ margin:5px auto; margin-bottom:10px; }
+#hottype ul{ margin:auto 20px;list-style-type:none; font-size:1.0em;  width:880px; overflow:hidden; }
+#hottype ul li{list-style-type:none; padding:10px; float:left; display:inline; }
+#hottype ul li a { padding:8px 10px; background:#0D58A6; color:#fff; border-right:1px solid #000; margin-bottom: 5px; }
+#hottype ul li a:hover{ background:#000067; }
+
+.page { width:960px; margin:10px auto; background:#FFF; padding:10px 20px 30px 20px; border:1px solid #CCC; border-radius:5px; }
 
     .header { padding-top:10px; border-bottom:1px solid #CCC; }
-        .header h1 { font-size:50px; }
+        .header h1 { font-size:2.5em; }
         .header a { color:#333; text-decoration:none; }
 
     .main {  }
         .main_content { }
 
-			.box h2 { padding-bottom:5px; margin-bottom:10px; font-weight:400; color:green; font-size:28px;}
+			.box h2 { padding-bottom:5px; margin-bottom:10px; font-weight:400; color:green; font-size:2.2em;}
 				
 
 
 
-    .foot { border-top:1px solid #CCC; color:#666; padding-top:10px; font-size:11px; }
+    .foot { border-top:1px solid #CCC; color:#666; padding-top:10px; font-size:0.8em; }
         .foot img { vertical-align:top; }
         #footinfo { float:right; }
         #counttools{ text-align:center; }
@@ -57,7 +78,7 @@ table tr { margin:0px auto; padding:3px; border:1px solid #ccc; }
 .browseContainer { text-align: center; font-family: Verdana, Helvetica; font-size: 1em; }
 .browseContainer a { color: #009; text-decoration: none; }
 .browseContainer a:hover { border-bottom: 1px solid #009; }
-.browseContainer dt { font-weight: bold; font-size: 1.6em; margin-bottom: 5px; clear: both; }
+.browseContainer dt { font-weight: bold; font-size: 1em; margin-bottom: 5px; clear: both; }
 
 .tv .browseContainer dt { line-height: 1.4em; font-size: 1.3em; }
 .tv .browseContainer dd { line-height: 1.4em; }
@@ -80,5 +101,5 @@ dt#showall a:hover { border-bottom: 1px solid #080; }
 
 /*介绍页*/
 #resource_info { margin:10px 10px; margin-bottom:20px;  border: 1px solid #000; padding: 5px;}
-#resource_info ul{list-style-type:none; font-size:15px;  margin-bottom: 5px; }
+#resource_info ul{list-style-type:none; font-size:1.5em;  margin-bottom: 5px; }
 #resource_info ul li{list-style-type:none; padding:5px; }

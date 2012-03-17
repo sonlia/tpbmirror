@@ -1,11 +1,7 @@
-﻿$:render.header()
-<div class="box">
-    <div class="browseContainer">
-        <ul>
-            <li>美剧</li>        
-        </url>
-    </div>
-    
+﻿$def with(hottype_cache)
+$:render.header()
+$:render.hottype(hottype_cache)
+<h3>浏览</h3> 
     <div class="browseContainer">
         <table id="categoriesTable">
             <tbody>
