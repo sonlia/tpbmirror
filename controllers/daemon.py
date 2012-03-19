@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import web
-import fetchtpb
+from utils import fetchtpb
 from config.settings import render
 from config.settings import alldbname
 

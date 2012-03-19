@@ -2,6 +2,9 @@
 //memoryboxes@gmail.com
 //2012-03-17
 
+
+//这部分暂时不用，因为统计代码加载较慢，所以不用等到页面全部加载完毕
+/*
 window.onload = prepareLinks;
 
 //为每一个顶/踩连接加入处理函数
@@ -27,6 +30,7 @@ function prepareLinks()
         }
     }
 }
+*/
 
 //顶
 function LikeAjaxFunction(likeNode) {

@@ -1,5 +1,5 @@
 body { background:#EEE; }
-.box {  margin:10px auto; margin-bottom:20px;}
+.box {  margin:10px auto; margin-bottom:40px;}
 .minibox {  margin:0px auto; width:900px; }
 .clear { clear:both; }
 .float_left { float:left; }
@@ -17,7 +17,6 @@ body { background:#EEE; }
 .long_txt { width:98%; }
 .must_be { color:red !important; }
 .magDown a{ display:block; width:60px; position:relative; }
-.magDown span{ position:absolute; width:60px; height:90%; cursor:pointer; background:url(images/download.gif) no-repeat; display:block }
 textarea { line-height:1.5em; }
 
 
@@ -34,13 +33,13 @@ table tr { margin:5px auto; border:1px solid #ccc; }
 table tr td{ margin:5px 5px; padding:3px 0px; }
 
 .resource_name { width:58% }
-.typeL1 { width:60px;}
+.typeL1 { width:80px;}
 .typeL2 { width:60px; }
 .magnet { width:50px; }
 .size { width:60px; }
 .info { width:30px; }
-.scoretd{ width:100px;}
-.score p{ width:90px; float:right; }
+.scoretd{ width:120px;}
+.score p{ width:110px; float:right; }
 
 .dig {  margin:0px 2px; border-radius: 5px 5px 5px 5px; color: #FFFFFF; font-size: 1.0em; padding: 3px 5px; }
 .bury { background: none repeat scroll 0 0 #990000; }
@@ -52,11 +51,18 @@ table tr td{ margin:5px 5px; padding:3px 0px; }
 #hottype{ margin:5px auto; margin-bottom:10px; }
 #hottype ul{ margin:auto 20px;list-style-type:none; font-size:1.0em;  width:880px; overflow:hidden; }
 #hottype ul li{list-style-type:none; padding:10px; float:left; display:inline; }
-#hottype ul li a { padding:8px 10px; background:#0D58A6; color:#fff; border-right:1px solid #000; margin-bottom: 5px; }
+#hottype ul li a { padding:8px 10px; background:#0D58A6; color:#fff; border-right:1px solid #000; margin-bottom: 5px; border-radius: 5px 5px 5px 5px; }
 #hottype ul li a:hover{ background:#000067; }
+
+/* 页码显示 */
+#navpages { float:right; margin-right:30px; margin-bottom:10px; margin-top:10px; }
 
 .page { width:960px; margin:10px auto; background:#FFF; padding:10px 20px 30px 20px; border:1px solid #CCC; border-radius:5px; }
 
+    #nav { clear:both; float:right; margin-top:50px; margin-right:20px;  }
+    #nav ul{list-style-type:none; font-size:1.3em;  margin-bottom: 5px; }
+    #nav ul li{list-style-type:none; padding:5px; float:left; }
+        
     .header { padding-top:10px; border-bottom:1px solid #CCC; }
         .header h1 { font-size:2.5em; }
         .header a { color:#333; text-decoration:none; }

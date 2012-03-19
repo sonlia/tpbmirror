@@ -3,8 +3,8 @@
 
 from config.settings import db
 from config.settings import render
-from fetchtpb import gettopURL
-import scheming
+from utils.fetchtpb import gettopURL
+from utils import scheming
 
 
 class testdb():
@@ -20,12 +20,12 @@ class testgetURL():
 class testfetchtop():
     
     def GET(self):
-        scheming.scheming_fetch_top()
+        scheming.scheming_fetch_tpb_top()
 
 class testfetchall():
 
     def GET(self):
-        scheming.scheming_fetch_all()
+        scheming.scheming_fetch_tpb_all()
 
 if __name__ == '__main__':
     a = testfetchall()
