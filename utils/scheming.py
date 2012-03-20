@@ -8,7 +8,7 @@ def scheming_fetch_tpb_top():
     "抓取Top100功能"
 
     startURL = 'http://labaia.ws/top/'
-    urllist = fetchtpb.gettopURL(startURL) 
+    urllist = fetchtpb.get_topURL(startURL) 
     print urllist
 
     for url in urllist:
@@ -18,7 +18,7 @@ def scheming_fetch_tpb_all():
     "抓取所有页面功能"
     
     startURL = 'http://labaia.ws/browse/'
-    urllist = fetchtpb.getallURL(startURL) 
+    urllist = fetchtpb.get_allURL(startURL) 
 
     for url in urllist:
         try:

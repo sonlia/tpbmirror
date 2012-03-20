@@ -3,8 +3,11 @@
 
 import urllib2
 import time
-import web
+from getopt import *
+import sys
 from BeautifulSoup import BeautifulSoup
+from config.settings import hotrank_oabt_weighted
+from config.settings import util_db
 
 
 class CFetchoabt():
@@ -19,8 +22,6 @@ class CFetchoabt():
     
     def __init__(self, url):
         self.url = url
-        database = "../database/tpbmirror.db"
-        self.db = web.database(dbn='sqlite', db=database)
 
     def magic_fetch_and_insert(self):
 
@@ -38,21 +39,31 @@ class CFetchoabt():
         tables = page_soup.findAll('table', cellspacing="0")
         tables = tables[3].contents[4:]
         for tr in tables:
-            try:
-                size = tr.contents[1].contents[9].contents[0] #size
-                typeL2 = tr.contents[1].contents[1].contents[0].contents[0] #type
-                resource_name = tr.contents[1].contents[3].contents[0].contents[0] #name
-                magnet = tr.contents[1].contents[5].contents[1]['href'] #magnet
-                ed2k = tr.contents[1].contents[5].contents[2]['ed2k'] #ed2k
-                self.db.insert('oabt', size=size, typeL1='Video', typeL2=typeL2, resource_name=resource_name, magnet=magnet, ed2k=ed2k)
-            except:
-                continue
-        
+            size = tr.contents[1].contents[9].contents[0] #size
+            typeL2 = tr.contents[1].contents[1].contents[0].contents[0] #type
+            typeL1 = 'Video'
+            if typeL2 == u'泰剧':
+                typeL2 = 'PC Games'
+                typeL1 = 'Games'
+            resource_name = tr.contents[1].contents[3].contents[0].contents[0] #name
+            magnet = tr.contents[1].contents[5].contents[1]['href'] #magnet
+            ed2k = tr.contents[1].contents[5].contents[2]['ed2k'] #ed2k
+            util_db.insert('all_resource', resource_name = resource_name,
+                                                 typeL1 = typeL1, typeL2 = typeL2, magnet = magnet, size = size, 
+                                                 hotrank = hotrank_oabt_weighted, extern_info = 'False', language = 'CH', ed2k = ed2k)
+    
         print 'OK'
-        pass
 
+""""
+抓取oabt
+使用方法:
+    python fetchoabt.py <begin> <end>
+                                                                开始页     结束页
+"""
 if __name__ == '__main__':
-    urllist = ['http://oabt.org/index.php?page=' + str(i) for i in range(10)]
+    opts, args = getopt(sys.argv[1:], "limit=")
+    print args[0], args[1]
+    urllist = ['http://oabt.org/index.php?page=' + str(i) for i in range(int(args[0]), int(args[1]) - int(args[0]) + 1)]
     for url in urllist:
         try:
             oabt = CFetchoabt(url)

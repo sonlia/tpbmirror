@@ -8,6 +8,9 @@ from xml.dom import minidom
 import web
 
 class CFetchDouban():
+    """
+        从豆瓣上抓取电影、音乐的评论及评分
+    """
     
     _movie_info = {}
     _music_info = {}

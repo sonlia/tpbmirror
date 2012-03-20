@@ -10,13 +10,16 @@ import memcache
 
 mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
-def add_record(dbname, name = 'N/A', typeL1 = 'none', typeL2 = 'none', magnet = '', size = 'Unknown'):
+def add_record_to_all_resource(dbname, resource_name = 'N/A', typeL1 = 'none', 
+                               typeL2 = 'none', magnet = '', size = 'Unknown', hotrank = 50, extern_info = 'False', 
+                               language = 'EN', ed2k = ''):
     "插入记录"
-    db.insert(dbname, resource_name = name, typeL1 = typeL1, typeL2 = typeL2, magnet = magnet, size = size)
+    db.insert(dbname, resource_name = resource_name, typeL1 = typeL1, typeL2 = typeL2, magnet = magnet, size = size, 
+              hotrank = hotrank, extern_info = extern_info, language = language, ed2k = ed2k)
     
-def get_recent_records(limit = 100):
+def get_recent_records(offset):
     "取得最近抓取的记录"    
-    sql_query = 'select * from ' + alldbname + ' order by fetch_time DESC limit ' + str(limit)
+    sql_query = 'select * from ' + alldbname + ' order by fetch_time DESC limit ' + str(perpage) + ' offset ' + str(offset)
     return _memchache_get_records(sql_query)
     
 def get_top_records(typeL1 = 'Video', typeL2 = None, offset = 0):
@@ -48,10 +51,10 @@ def get_hot_types():
 def search_all_resource(name, resource_type = 'All', limit=200):
     "全站搜索"
     if resource_type == 'All':
-        return db.select(alldbname, where = 'resource_name like "%' + name + '%"', order = "resource_name ASC", limit = limit).list()
+        return db.select(alldbname, where = 'resource_name like "%' + name + '%"', order = "resource_name ASC, hotrank DESC, fetch_time DESC", limit = limit).list()
     else:
         return db.select(alldbname, 
-            where = 'typeL1 = "' + resource_type + '" and resource_name like "%' + name + '%"', order = "resource_name ASC", limit = limit).list()
+            where = 'typeL1 = "' + resource_type + '" and resource_name like "%' + name + '%"', order = "resource_name ASC, hotrank DESC, fetch_time DESC", limit = limit).list()
 
 def get_extern_info(resource_info_id = -1):
     "获取资源的详细信息"
@@ -78,8 +81,8 @@ def get_score_value(resource_id, score_type):
     return str(res[score_type])
         
     
-def _memchache_get_records(sql_query, time = 100):
-    "memcache缓存,time默认为100分钟"
+def _memchache_get_records(sql_query, time = 5):
+    "memcache缓存,time默认为5分钟"
     
     #hash一下，为了key键分布更均衡
     key = md5(sql_query.encode('UTF-16')).hexdigest()

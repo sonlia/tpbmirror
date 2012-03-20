@@ -4,6 +4,7 @@
 import web
 from config.settings import render
 from config.settings import perpage
+from config.settings import recent_count_limit
 from models import mirrordb
 
 def _score_like_or_bury():
@@ -19,8 +20,24 @@ class index():
 class recentview():
     "显示最近收录的检索页面"
     def GET(self):
-        results = mirrordb.get_recent_records()
-        return render.view(results, [], 0, 0, 0)
+        #处理分页
+        params = web.input()
+        curr_page  = params.page if hasattr(params, 'page') else 1
+        offset = (int(curr_page) - 1) * perpage
+        
+        results = mirrordb.get_recent_records(offset)
+        #计算一共有多少页
+        pages = recent_count_limit / perpage
+        #上一页/下一页
+        lastpage = int(curr_page) - 1
+        nextpage = int(curr_page) + 1
+    
+        page_list=[]
+        total = pages
+        for p in range(0,10):
+            page_list.append(p + int(curr_page))
+            
+        return render.view(results, page_list, total, lastpage, nextpage)
     
     def POST(self):
         try:

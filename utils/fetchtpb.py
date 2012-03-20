@@ -3,15 +3,17 @@
 
 import urllib2
 import re
-from BeautifulSoup import BeautifulSoup
 from getopt import *
 import sys
+from BeautifulSoup import BeautifulSoup
+from config.settings import util_db
+from config.settings import hotrank_tpb_weighted
 
 from models import mirrordb
 from config.settings import alldbname
 
-def gettopURL(startURL):
-    "获取startURL页面上的所有链接"
+def get_topURL(startURL):
+    "获取startURL页面上的所有链接，仅限于top页面"
     topfp = urllib2.urlopen(startURL)
     pattern = re.compile("top/[0-9]+")
     while True:
@@ -23,8 +25,8 @@ def gettopURL(startURL):
         topfp.close()
         return urls
 
-def getallURL(startURL):
-    "获取startURL页面上的所有链接"
+def get_allURL(startURL):
+    "获取startURL页面上的所有链接，仅限于browse页面"
     print startURL
     allfp = urllib2.urlopen(startURL)
     pattern = re.compile("browse/[0-9]+")
@@ -39,6 +41,14 @@ def getallURL(startURL):
             for ii in range(2, 15):
                 totalurls.append(url + str(i) + '/' + str(ii) + '/')
     return totalurls
+
+def get_recent_url(begin, end, startURL = 'http://labaia.ws/recent/'):
+    url_base = startURL
+    urllist = []
+    for i in range(begin, end - begin + 1):
+        urllist.append(url_base + str(i))
+    return urllist
+    
 
 def fetch(url, begin, end, dbname = alldbname):
     """
@@ -69,14 +79,19 @@ def fetch(url, begin, end, dbname = alldbname):
                 acollect = tr.findAll('a')
                 typeL1 = ''.join(acollect[0].contents)
                 typeL2 = ''.join(acollect[1].contents)
+                #改一下分类名
+                if typeL2 == 'PC' and typeL1 == 'Games':
+                    typeL2 = 'PC Games'
                 name = ''.join(acollect[2].contents)
-                magnetlink = acollect[3]['href']
+                magnet = acollect[3]['href']
                 font = tr.findAll('font')
                 sizelazy = ''.join(font[0].contents[0])
                 #获取大小，不用费心看了，严重依赖于格式
                 size = sizelazy[sizelazy.find('Size') + 5:sizelazy.find('iB') + 2].replace(ur'&nbsp;', '')
                 print "name:%s, typeL1:%s, typeL2:%s, size:%s" % (name, typeL1, typeL2, size)
-                mirrordb.add_record(dbname , name, typeL1, typeL2, magnetlink, size)
+                util_db.insert('all_resource', resource_name = name,
+                                                 typeL1 = typeL1, typeL2 = typeL2, magnet = magnet, size = size, 
+                                                 hotrank = hotrank_tpb_weighted, extern_info = 'False', language = 'EN', ed2k = '')
             except:
                 i = i + 1
                 print 'fetch resouce url Err, url:%s' % (url) 
@@ -92,6 +107,14 @@ def fetch_all(urllist, begin, end):
             print 'fetch err url:%s' % (url)
             continue
 
+def fetch_recent(begin, end):
+    for url in get_recent_url(begin, end):
+        try:
+            fetch(url, dbname=alldbname, begin=begin, end=end)
+        except:
+            print 'fetch err url:%s' % (url)
+            continue
+
 """"
 抓取海盗湾
 使用方法:
@@ -101,8 +124,8 @@ def fetch_all(urllist, begin, end):
 if __name__ == '__main__':
     opts, args = getopt(sys.argv[1:], "limit=")
     print args[0], args[1]
-    #fetch('http://labaia.ws/top/602')
-    startURL = 'http://labaia.ws/browse/'
-    urllist = getallURL(startURL) 
-    fetch_all(urllist, int(args[0]), int(args[1]))
+#    fetch('http://labaia.ws/top/602')
+#    startURL = 'http://labaia.ws/browse/'
+#    urllist = get_allURL(startURL) 
+    fetch_recent(int(args[0]), int(args[1]))
 

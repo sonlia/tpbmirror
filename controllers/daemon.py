@@ -29,7 +29,7 @@ class daemon_fetch():
         elif startURL.find('top') > 0:
             self.dbname = alldbname
             if startURL.endswith('top/'):
-                self.urllist = fetchtpb.gettopURL(startURL) 
+                self.urllist = fetchtpb.get_topURL(startURL)
             else:
                 self.urllist.append(startURL)
         else:
