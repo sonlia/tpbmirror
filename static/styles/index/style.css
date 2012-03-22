@@ -32,14 +32,14 @@ table thead tr{ background-color:#8FC629; }
 table tr { margin:5px auto; border:1px solid #ccc; }
 table tr td{ margin:5px 5px; padding:3px 0px; }
 
-.resource_name { width:58% }
+.resource_name { width:55% }
 .typeL1 { width:80px;}
 .typeL2 { width:60px; }
 .magnet { width:50px; }
 .size { width:60px; }
 .info { width:30px; }
 .scoretd{ width:120px;}
-.score p{ width:110px; float:right; }
+.score p{ width:100px; float:right; }
 
 .dig {  margin:0px 2px; border-radius: 5px 5px 5px 5px; color: #FFFFFF; font-size: 1.0em; padding: 3px 5px; }
 .bury { background: none repeat scroll 0 0 #990000; }

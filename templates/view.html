@@ -1,5 +1,5 @@
-$def with(content, page_list, total, lastpage, nextpage)
-$:render.header()
+$def with(content, page_list, total, lastpage, nextpage, typeL1=None, typeL2=None)
+$:render.header(typeL1, typeL2)
 <div class="box">
     <table id="resource" class="minibox" style="table-layout:fixed">
         <thead id="theader">
@@ -17,8 +17,8 @@ $:render.header()
             $for items in content:
             <tr class="resourceitem">
                 <td class="resource_name" id="$items.get('resource_id')" style="text-overflow:ellipsis; overflow: hidden; " >$:items.get('resource_name')</td>
-                <td class="typeL1">$items.get('typeL1')</td>
-                <td class="typeL2">$items.get('typeL2')</td>
+                <td class="typeL1"><a href="/tpbtop/$items.get('typeL1')">$items.get('typeL1')<a></td>
+                <td class="typeL2"><a href="/tpbtop/$items.get('typeL1')/$items.get('typeL2')">$items.get('typeL2')</a></td>
                 <td ><a class="magDown" href="$items.get('magnet')"><img src="/static/images/download.gif" alt="下载"></a></td>
                 <td class="size">$items.get('size')</td>
                 $if items.get('extern_info') == 'True': <td class="info" align="center" valign="middle"><a href="/resourceinfoid/$items.get('resource_info_id')" target="blank"><img src="/static/images/extern_info_true.gif" alt="详细信息"></a></td>

@@ -62,7 +62,7 @@ class searchview():
     "显示搜索结果页"
     def GET(self):
         search_type = web.input().searchtype
-        search_name = web.input().searchname 
+        search_name = web.input().wd 
         results = mirrordb.search_all_resource(resource_type=search_type, name=search_name)
         return render.view(results, [], 0, 0, 0)
     
@@ -102,7 +102,7 @@ class typeview():
         for p in range(0,10):
             page_list.append(p + int(curr_page))
             
-        return render.view(results, page_list, total, lastpage, nextpage)
+        return render.view(results, page_list, total, lastpage, nextpage, typeL1, typeL2)
     
     def POST(self):
         try:

@@ -3,7 +3,7 @@
 
 from config.settings import alldbname, infodbname
 import web
-database = "../database/tpbmirror.db"
+database = "../database/tpbmirror_v2_only_douban.db"
 db = web.database(dbn='sqlite', db=database)
 
 """
@@ -32,17 +32,17 @@ def update_douban_all_resource_record():
 
 def update_mtime_all_resource_record():
     #首先从resource_info表中取出数据来
-    res = db.query('select * from '+ infodbname + ' where source_site=="mtime"').list()
-    groupid = 1
+    res = db.query('select * from '+ infodbname + ' where source_site=="mtime" order by resource_info_id DESC').list()
+    groupid = 7881
     for item in res:
         is_group = False
-        hotrank = str(50 + item['rating'] * 10) 
+        hotrank = str(100 + item['rating'] * 10) 
         try:
             #来源于时光网
             #先用resource_info中的英文名在all_resource中找到相应的记录
             if item['local_name']:
-                local_name = item['local_name'].replace('"', '')
-                resource_info = db.query('select * from ' + alldbname + ' where resource_name like "%' + local_name + '%"' +  ' and extern_info=="False" and typeL1=="Video" limit 50').list()
+                aka = item['aka'].replace('"', '')
+                resource_info = db.query('select * from ' + alldbname + ' where resource_name like "%' + aka + '%"' +  ' and language=="CH" and extern_info=="False" and typeL1=="Video" limit 50').list()
                 
                 #对得到的每条记录
                 for info in resource_info:
