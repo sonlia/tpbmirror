@@ -33,7 +33,7 @@ class CFetchoabt():
                    'Host': 'oabt.org',
                    'User-Agent': 'Mozilla/5.0 (Windows NT 5.1; rv:10.0.2) Gecko/20100101 Firefox/10.0.2'}
         req = urllib2.Request(self.url, headers=headers)
-        doc = urllib2.urlopen(req).read()
+        doc = urllib2.urlopen(req, timeout = 10).read()
 
         page_soup = BeautifulSoup.BeautifulSoup(doc)
         tables = page_soup.findAll('table', cellspacing="0")
@@ -48,10 +48,12 @@ class CFetchoabt():
             resource_name = tr.contents[1].contents[3].contents[0].contents[0] #name
             magnet = tr.contents[1].contents[5].contents[1]['href'] #magnet
             ed2k = tr.contents[1].contents[5].contents[2]['ed2k'] #ed2k
-            util_db.insert('all_resource', resource_name = resource_name,
+            try:
+                util_db.insert('all_resource', resource_name = resource_name,
                                                  typeL1 = typeL1, typeL2 = typeL2, magnet = magnet, size = size, 
                                                  hotrank = hotrank_oabt_weighted, extern_info = 'False', language = 'CH', ed2k = ed2k)
-    
+            except:
+                print "insert Err"
         print 'OK'
 
 """"
@@ -70,6 +72,7 @@ if __name__ == '__main__':
             oabt.magic_fetch_and_insert()
             time.sleep(10)
         except:
+            print "Err,url:%s" % (url)
             continue
             
         

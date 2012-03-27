@@ -11,8 +11,6 @@ urls = (
     '/search',              pre_fix + 'view.searchview',
     '/help',                pre_fix + 'view.simpletpb_help',
     '/resourceinfoid/.*',   pre_fix + 'view.resource_info',
+    '/resourcegroup/.*',    pre_fix + 'view.resource_group',    
     '/fetch',               pre_fix + 'daemon.daemon_fetch',
-    '/testdb',              pre_fix + 'test.testdb',
-    '/testfetchtop',        pre_fix + 'test.testfetchtop',
-    '/testfetchall',        pre_fix + 'test.testfetchall',
 )

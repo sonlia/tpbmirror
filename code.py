@@ -13,3 +13,6 @@ app.notfound = notfound
 
 if __name__ == "__main__":
     app.run()
+else:
+    web.debug = False
+    application = app.wsgifunc()

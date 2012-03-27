@@ -3,7 +3,6 @@
 
 from config.settings import db
 from config.settings import render
-from utils.fetchtpb import gettopURL
 from utils import scheming
 
 
@@ -12,10 +11,6 @@ class testdb():
     def GET(self):
         db.insert('top', resource_name=u'MagicZhang', typeL1='movie', typeL2='kongfu', magnet='zz', size='10B')
 
-class testgetURL():
-    
-    def GET(self):
-        return render.test(gettopURL('http://labaia.ws/top'))
 
 class testfetchtop():
     

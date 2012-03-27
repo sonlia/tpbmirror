@@ -51,7 +51,9 @@ class CFetchDouban():
                 elif item.getAttribute('name') == u'director':
                     self._movie_info['director'] = item.childNodes[0].data 
                 elif item.getAttribute('name') == u'aka':
-                    self._movie_info['aka'] = item.childNodes[0].data                 
+                    self._movie_info['aka'] = item.childNodes[0].data
+                elif item.getAttribute('name') == u'title':
+                    self._movie_info['local_name'] = item.childNodes[0].data                       
     
             try:
                 self._movie_info['summary'] = real_xml_dom.getElementsByTagName('summary')[0].childNodes[0].data
@@ -68,7 +70,7 @@ class CFetchDouban():
             return None
         
     def fetch_movie_info(self):
-        res = self.db.select('all_resource', where='resource_id>147773 and typeL2="TV shows" or typeL2="Movies" and resource_id>147773 or resource_id>336302').list()
+        res = self.db.select('all_resource', where='is_spider="False" and extern_info="False" and typeL2="TV shows" or typeL2="Movies" and extern_info="False"').list()
         #res = db.query('select * from allsource where allsource.resource_id not in (select resource_id from doubaninfo) and typeL1="Video" and typeL2="Movies" or typeL2="TV shows"')
         for item in res:
             if self.db.select('resource_info', where='resource_id = "' + str(item['resource_id']) + '"'):
@@ -82,15 +84,15 @@ class CFetchDouban():
             if movie_info:
                 try:
                     print movie_info
-                    self.db.insert('resource_info', resource_id=item['resource_id'], typeL1='Video',
+                    resource_info_id = self.db.insert('resource_info', resource_id=item['resource_id'], typeL1='Video',
                               pubdate=movie_info['pubdate'], summary=movie_info['summary'], country=movie_info['country'],
-                              director=movie_info['director'], aka=movie_info['aka'], doubanURL=movie_info['doubanURL'],
+                              director=movie_info['director'], aka=movie_info['aka'], local_name=movie_info['local_name'], sourceURL=movie_info['doubanURL'],
                               imgURL=movie_info['imgURL'], rating=float(movie_info['rating']))
-                    self.db.query('update all_resource set hotrank=hotrank +' + str(float(movie_info['rating']) * 10) + ', extern_info="True" where resource_id==' + str(item['resource_id']))
+                    self.db.query('update all_resource set hotrank=hotrank +' + str(float(movie_info['rating']) * 10) + ', extern_info="True", resource_info_id=' + str(resource_info_id) +' where resource_id==' + str(item['resource_id']))
                 except:           
                     print 'Err, insert db failed' 
                     pass
-                
+            self.db.query('update all_resource set is_spider="True" where resource_id==' + str(item['resource_id']))
             time.sleep(10)
     
     def _get_music_info(self):
@@ -109,7 +111,9 @@ class CFetchDouban():
                 elif item.getAttribute('name') == u'director':
                     self._music_info['director'] = item.childNodes[0].data 
                 elif item.getAttribute('name') == u'aka':
-                    self._music_info['aka'] = item.childNodes[0].data                 
+                    self._music_info['aka'] = item.childNodes[0].data     
+                elif item.getAttribute('name') == u'title':
+                    self._music_info['local_name'] = item.childNodes[0].data                                  
 
             try:
                 self._music_info['summary'] = real_xml_dom.getElementsByTagName('summary')[0].childNodes[0].data
@@ -126,7 +130,7 @@ class CFetchDouban():
             return None
  
     def fetch_music_info(self):
-        res = self.db.select('all_resource', where='typeL2=="Music"').list()
+        res = self.db.select('all_resource', where='is_spider="False" and typeL2="Music" and extern_info="False"').list()
         #res = db.query('select * from allsource where allsource.resource_id not in (select resource_id from doubaninfo) and typeL1="Video" and typeL2="Movies" or typeL2="TV shows"')
         for item in res:
             if self.db.select('resource_info', where='resource_id = "' + str(item['resource_id']) + '"'):
@@ -137,18 +141,19 @@ class CFetchDouban():
             if music_info:
                 try:
                     print music_info
-                    self.db.insert('resource_info', resource_id=item['resource_id'], typeL1='Audio',
+                    resource_info_id = self.db.insert('resource_info', resource_id=item['resource_id'], typeL1='Audio',
                               pubdate=music_info['pubdate'], summary=music_info['summary'], country=music_info['country'],
-                              director=music_info['director'], aka=music_info['aka'], doubanURL=music_info['doubanURL'],
+                              director=music_info['director'], aka=music_info['aka'], local_name=music_info['local_name'], sourceURL=music_info['doubanURL'],
                               imgURL=music_info['imgURL'], rating=float(music_info['rating']))
-                    self.db.query('update all_resource set hotrank=hotrank +' + str(float(music_info['rating']) * 10) + ', extern_info="True" where resource_id==' + str(item['resource_id']))
+                    self.db.query('update all_resource set hotrank=hotrank +' + str(float(music_info['rating']) * 10) + ', extern_info="True", resource_info_id=' + str(resource_info_id) + ' where resource_id==' + str(item['resource_id']))
                 except:           
                     print 'Err, insert db failed' 
                     pass
+            self.db.query('update all_resource set is_spider="True" where resource_id==' + str(item['resource_id']))
                 
             time.sleep(10)
 
 if __name__ == '__main__':
-    music = CFetchDouban('Audio')
-    print music.fetch_music_info()
+    movie = CFetchDouban('Movie')
+    print movie.fetch_movie_info()
     

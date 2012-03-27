@@ -56,6 +56,10 @@ def search_all_resource(name, resource_type = 'All', limit=200):
         return db.select(alldbname, 
             where = 'typeL1 = "' + resource_type + '" and resource_name like "%' + name + '%"', order = "resource_name ASC, hotrank DESC, fetch_time DESC", limit = limit).list()
 
+def get_resource_group(resource_info_id):
+    "获取相近资源记录"
+    return db.select(alldbname, where = 'resource_info_id==' + str(resource_info_id), order = "resource_name ASC, hotrank DESC, fetch_time DESC").list()
+
 def get_extern_info(resource_info_id = -1):
     "获取资源的详细信息"
     res =  db.query('select * from ' + infodbname + ' where resource_info_id ==' + str(resource_info_id)).list()

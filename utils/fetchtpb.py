@@ -7,7 +7,7 @@ from getopt import *
 import sys
 from BeautifulSoup import BeautifulSoup
 from config.settings import util_db
-from config.settings import hotrank_tpb_weighted
+from config.settings import hotrank_tpb_weighted, hotrank_top_weighted
 
 from models import mirrordb
 from config.settings import alldbname
@@ -50,15 +50,11 @@ def get_recent_url(begin, end, startURL = 'http://labaia.ws/recent/'):
     return urllist
     
 
-def fetch(url, begin, end, dbname = alldbname):
+def fetch(url, dbname = alldbname):
     """
         根据指定的url抓取资源信息，存到数据库中
         此页面必须是直接有链接的页面
     """ 
-    print int(url[24:27])
-    if int(url[24:27]) >= end or int(url[24:27]) < begin:
-        return 
-    
     try:
         doc = urllib2.urlopen(url, timeout=10)
     except:
@@ -88,10 +84,16 @@ def fetch(url, begin, end, dbname = alldbname):
                 sizelazy = ''.join(font[0].contents[0])
                 #获取大小，不用费心看了，严重依赖于格式
                 size = sizelazy[sizelazy.find('Size') + 5:sizelazy.find('iB') + 2].replace(ur'&nbsp;', '')
+                
+                #判定hotrank
+                hotrank = hotrank_tpb_weighted
+                if url.find('top') > 0:
+                    hotrank += hotrank_top_weighted
+                
                 print "name:%s, typeL1:%s, typeL2:%s, size:%s" % (name, typeL1, typeL2, size)
                 util_db.insert('all_resource', resource_name = name,
                                                  typeL1 = typeL1, typeL2 = typeL2, magnet = magnet, size = size, 
-                                                 hotrank = hotrank_tpb_weighted, extern_info = 'False', language = 'EN', ed2k = '')
+                                                 hotrank = hotrank, extern_info = 'False', language = 'EN', ed2k = '')
             except:
                 i = i + 1
                 print 'fetch resouce url Err, url:%s' % (url) 
@@ -110,7 +112,7 @@ def fetch_all(urllist, begin, end):
 def fetch_recent(begin, end):
     for url in get_recent_url(begin, end):
         try:
-            fetch(url, dbname=alldbname, begin=begin, end=end)
+            fetch(url, dbname=alldbname)
         except:
             print 'fetch err url:%s' % (url)
             continue

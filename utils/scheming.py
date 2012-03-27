@@ -27,3 +27,5 @@ def scheming_fetch_tpb_all():
             print 'fetch err url:%s' %(url)
             continue
 
+if __name__ == '__main__':
+    scheming_fetch_tpb_top()

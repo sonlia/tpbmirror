@@ -119,8 +119,24 @@ class resource_info():
             result = mirrordb.get_extern_info(resource_info_id)
             return render.resource_info(result[0])
         except:
-            pass
             return render.error("没有找到您要的信息，我们会尽快录入", "/")
+        
+class resource_group():
+    "根据传来的resource_info_id检索资源的下载信息"
+    def GET(self):
+        try:
+            resource_info_id_str = web.ctx.path
+            resource_info_id = int(resource_info_id_str.split('/')[2])
+            results = mirrordb.get_resource_group(resource_info_id) 
+            return render.view(results, [], 0, 0, 0) 
+        except:
+            return render.error("没有找到您要的信息，我们会尽快录入", "/")    
+        
+    def POST(self):
+        try:
+            return _score_like_or_bury()
+        except:
+            pass                 
             
 class simpletpb_help():
     
