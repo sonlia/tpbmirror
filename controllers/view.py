@@ -79,6 +79,10 @@ class typeview():
         urltypes = urltype_str.split('/')[2:]
         typeL1 = urltypes[0]
         typeL2 = (len(urltypes) > 1) and urltypes[1] or None
+        
+        #hack手段，因为 这一分类下有反斜杠
+        if(typeL2 == "IOS (iPad"):
+            typeL2 = "IOS (iPad/iPhone)"
 
         #如果url中有'_'符号，替换为空格
         typeL1 = typeL1.replace('_', ' ')

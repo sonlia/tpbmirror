@@ -22,7 +22,7 @@ hotrank_oabt_weighted = 100
 #默认从tpb抓回来的初始分数
 hotrank_tpb_weighted = 50
 
-hotrank_top_weighted = 100
+hotrank_top_weighted = 90
 
 #首页显示的"热点"标签数量
 hot_tags = 18
