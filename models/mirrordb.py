@@ -8,7 +8,7 @@ from config.settings import alldbname, infodbname
 from hashlib import md5
 import memcache
 
-mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+mc = memcache.Client(['tcp://memcached-memorybox.dotcolud.com:23928'], debug=0)
 
 def add_record_to_all_resource(dbname, resource_name = 'N/A', typeL1 = 'none', 
                                typeL2 = 'none', magnet = '', size = 'Unknown', hotrank = 50, extern_info = 'False', 
@@ -88,11 +88,12 @@ def get_score_value(resource_id, score_type):
 def _memchache_get_records(sql_query, time = 5):
     "memcache缓存,time默认为5分钟"
     
-    #hash一下，为了key键分布更均衡
+    hash一下，为了key键分布更均衡
     key = md5(sql_query.encode('UTF-16')).hexdigest()
     res = mc.get(key)
     if not res:
         res = db.query(sql_query).list()
         mc.set(key, res, 60 * time) #存100分钟
-        
+
+    res = db.query(sql_query).list()
     return res
